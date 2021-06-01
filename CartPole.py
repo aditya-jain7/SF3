@@ -26,6 +26,7 @@ def _remap_angle(theta):
 def _loss(state):
     sig = 0.5
     return 1-np.exp(-np.dot(state,state)/(2.0 * sig**2))
+    
 
 def loss(state):
     return _loss(state)
