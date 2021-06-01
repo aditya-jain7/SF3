@@ -18,7 +18,8 @@ def _remap_angle(theta):
     while theta > np.pi:
         theta -= 2. * np.pi
     return theta
-    
+
+
 
 ## loss function given a state vector. the elements of the state vector are
 ## [cart location, cart velocity, pole angle, pole angular velocity]
@@ -28,6 +29,13 @@ def _loss(state):
 
 def loss(state):
     return _loss(state)
+
+def loss2(state):
+    sig0=20
+    sig=0.5
+    first_component=1-np.exp(-(state[0]**2)/(2.0 * sig0**2))
+    rest=1-np.exp(-np.dot(state[1:],state[1:])/(2.0 * sig**2))
+    return first_component+rest
 
 class CartPole:
     """Cart Pole environment. This implementation allows multiple poles,
@@ -122,6 +130,8 @@ class CartPole:
     def loss(self):
         return _loss(self.getState())
     
+    
+
     def terminate(self):
         """Indicates whether or not the episode should terminate.
 
